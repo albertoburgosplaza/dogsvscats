@@ -3,3 +3,4 @@ data
 *.egg-info
 *.pyc
 *ipynb_checkpoints
+dist/dogsvscats-0.0.1.tar.gz
