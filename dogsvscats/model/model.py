@@ -11,8 +11,8 @@ from dogsvscats.model.utils import EarlyStopping
 MODEL = namedtuple("model", ["url"])
 
 MODELS = {
-    "resnet18_2021-01-14": MODEL(
-        url="https://github.com/albertoburgosplaza/dogs_vs_cats/releases/download/0.0.1/dogs_vs_cats_resnet18_2021-01-14.zip"  # noqa: E501
+    "resnet18_2021-01-26": MODEL(
+        url="https://github.com/albertoburgosplaza/dogsvscats/releases/download/modelweights-v0.0.1/resnet18_2021-01-26.zip"  # noqa: E501
     )
 }
 
