@@ -11,3 +11,4 @@ Play with the demo:
 - [ ] Interpretability with Captum
 - [ ] Profile use of resources
 - [ ] Add different models
+- [ ] Create a web app
