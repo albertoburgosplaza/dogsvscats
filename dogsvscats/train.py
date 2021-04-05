@@ -9,9 +9,7 @@ from dogsvscats import config
 
 
 image_datasets = get_datasets(
-    sample_size=config.SAMPLE_SIZE,
-    train_tfs=train_tfs,
-    val_tfs=val_tfs,
+    sample_size=config.SAMPLE_SIZE, train_tfs=train_tfs, val_tfs=val_tfs
 )
 
 dataloaders = {
@@ -28,6 +26,7 @@ dataset_sizes = {x: len(image_datasets[x]) for x in ["train", "val"]}
 class_names = image_datasets["train"].classes
 
 model = get_model()
+model = model.to(config.DEVICE)
 
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(model.parameters(), lr=config.LR, momentum=0.9)

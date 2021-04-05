@@ -21,7 +21,6 @@ def get_model(checkpoint_path=None, model_name=None):
     model = models.resnet18(pretrained=True)
     num_ftrs = model.fc.in_features
     model.fc = nn.Linear(num_ftrs, 2)
-    model = model.to(config.DEVICE)
 
     state_dict = None
     if checkpoint_path:
