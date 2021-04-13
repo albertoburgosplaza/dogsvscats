@@ -7,7 +7,7 @@ Play with the demo:
 
 ## To-Do
 - [x] Colab demo
-- [ ] Adapt to Lightning
+- [ ] Adapt to Lightning (different repo)
 - [ ] Interpretability with Captum
 - [ ] Profile use of resources
 - [ ] Add different models
