@@ -58,7 +58,7 @@ class LitDogsVsCats(pl.LightningModule):
         criterion = nn.CrossEntropyLoss()
         loss = criterion(outputs, labels)
 
-        self.log("train_loss", loss)
+        self.log("train_loss", loss, on_epoch=True)
 
         return {"loss": loss}
 
@@ -72,16 +72,3 @@ class LitDogsVsCats(pl.LightningModule):
         self.log("val_loss", loss)
 
         return {"loss": loss}
-
-
-litdogsvscats = LitDogsVsCats()
-
-early_stopping = pl.callbacks.EarlyStopping(
-    monitor="val_loss", patience=config.EARLY_STOPPING_PATIENCE, verbose=True
-)
-# model_checkpoint = pl.callbacks.ModelCheckpoint(**cfg.callbacks.model_checkpoint.params)
-
-# tb_logger = pl.lo TensorBoardLogger(save_dir=cfg.general.save_dir)
-
-trainer = pl.Trainer(gpus=1, callbacks=[early_stopping])
-trainer.fit(litdogsvscats)

@@ -1,44 +1,16 @@
-import torch.optim as optim
-import torch.nn as nn
-from torch.optim import lr_scheduler
-from torch.utils.data import DataLoader
-from dogsvscats.model.model import train_model, get_model
-from dogsvscats.data.transforms import train_tfs, val_tfs
-from dogsvscats.data.dataset import get_datasets
+import pytorch_lightning as pl
+from dogsvscats.model.lightning import LitDogsVsCats
 from dogsvscats import config
 
+litdogsvscats = LitDogsVsCats()
 
-image_datasets = get_datasets(
-    sample_size=config.SAMPLE_SIZE, train_tfs=train_tfs, val_tfs=val_tfs
+early_stopping = pl.callbacks.EarlyStopping(
+    monitor="val_loss", patience=config.EARLY_STOPPING_PATIENCE
 )
 
-dataloaders = {
-    x: DataLoader(
-        image_datasets[x],
-        batch_size=config.BS,
-        shuffle=True,
-        num_workers=config.NW,
-    )
-    for x in ["train", "val"]
-}
-
-dataset_sizes = {x: len(image_datasets[x]) for x in ["train", "val"]}
-class_names = image_datasets["train"].classes
-
-model = get_model()
-model = model.to(config.DEVICE)
-
-criterion = nn.CrossEntropyLoss()
-optimizer = optim.SGD(model.parameters(), lr=config.LR, momentum=0.9)
-scheduler = lr_scheduler.ReduceLROnPlateau(
-    optimizer, patience=config.SCHEDULER_PATIENCE, verbose=True
+model_checkpoint = pl.callbacks.ModelCheckpoint(
+    dirpath=config.MODEL_DATA_PATH, save_weights_only=True
 )
 
-model = train_model(
-    model,
-    dataloaders,
-    dataset_sizes,
-    criterion,
-    optimizer,
-    scheduler,
-)
+trainer = pl.Trainer(gpus=1, callbacks=[early_stopping, model_checkpoint])
+trainer.fit(litdogsvscats)

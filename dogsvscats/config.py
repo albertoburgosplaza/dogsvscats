@@ -19,3 +19,6 @@ SAMPLE_SIZE = 1
 
 CLASSES = {0: "cat", 1: "dog"}
 INV_CLASSES = {v: k for k, v in CLASSES.items()}
+
+MODEL_NAME = "resnet18_2021-01-26"
+CHECKPOINT_PATH = MODEL_DATA_PATH / "epoch=7-step=1407.ckpt"
