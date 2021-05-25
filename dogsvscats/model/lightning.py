@@ -10,9 +10,9 @@ from dogsvscats import config
 
 
 class LitDogsVsCats(pl.LightningModule):
-    def __init__(self):
+    def __init__(self, **kwargs):
         super().__init__()
-        self.model = get_model()
+        self.model = get_model(**kwargs)
 
     def forward(self, x):
         return self.model(x)
@@ -58,7 +58,7 @@ class LitDogsVsCats(pl.LightningModule):
         criterion = nn.CrossEntropyLoss()
         loss = criterion(outputs, labels)
 
-        self.log("train_loss", loss, on_epoch=True)
+        self.log("train_loss", loss, on_step=False, on_epoch=True)
 
         return {"loss": loss}
 

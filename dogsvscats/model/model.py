@@ -1,3 +1,4 @@
+import torch
 from torchvision import models
 import torch.nn as nn
 from torch.utils import model_zoo
@@ -14,13 +15,17 @@ MODELS = {
 }
 
 
-def get_model(checkpoint_path=None, model_name=None):
+def get_model(model_path=None, checkpoint_path=None, model_name=None):
     model = models.resnet18(pretrained=True)
     num_ftrs = model.fc.in_features
     model.fc = nn.Linear(num_ftrs, 2)
 
     state_dict = None
-    if checkpoint_path:
+
+    if model_path:
+        model = torch.load(model_path)
+        return model
+    elif checkpoint_path:
         state_dict = get_state_dict_from_lightning_checkpoint(checkpoint_path)
     elif model_name:
         state_dict = model_zoo.load_url(
